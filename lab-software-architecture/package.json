@@ -1,0 +1,23 @@
+{
+  "name": "workshop-arquitetura-software",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pre-workshop pratico sobre arquitetura de software com Express",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test test/baseline.test.js",
+    "test:challenge": "node --test test/challenge.test.js",
+    "test:all": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.1"
+  }
+}
