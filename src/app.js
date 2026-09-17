@@ -34,7 +34,7 @@ app.post('/orders', (request, response) => {
     return response.status(400).json({ error: 'Invalid shipping type' });
   }
 
-  if (!payment || !['credit_card', 'boleto'].includes(payment.method)) {
+  if (!payment || !['credit_card', 'boleto','pix'].includes(payment.method)) {
     return response.status(400).json({ error: 'Invalid payment method' });
   }
 
@@ -71,14 +71,24 @@ app.post('/orders', (request, response) => {
 
   if (customer.type === 'vip') {
     discountInCents += Math.round(subtotalInCents * 0.1);
+  } 
+  
+  if (customer.type === 'student') 
+  {
+    discountInCents += Math.round(subtotalInCents * 0.1);
   }
 
   if (coupon === 'WELCOME10') {
     discountInCents += Math.round((subtotalInCents - discountInCents) * 0.1);
   }
 
+  if (payment.method === 'pix') 
+  {
+    discountInCents += Math.round((subtotalInCents - discountInCents) * 0.05);
+  }
+
   let shippingInCents = 0;
-  if (shipping.type === 'delivery') {
+  if (shipping.type === 'delivery' && (subtotalInCents - discountInCents) < 10000) {
     shippingInCents = shipping.state === 'SP' ? 1500 : 3000;
   }
 
